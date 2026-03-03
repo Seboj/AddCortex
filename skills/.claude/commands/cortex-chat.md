@@ -6,13 +6,13 @@ Send a quick chat completion to Cortex. Use the message from the user's argument
 
 Parse the arguments for optional flags:
 - `--pool POOL_NAME` — target a specific pool (default: `default`)
-- `--model MODEL_NAME` — use a specific model (default: server's model, currently Qwen/Qwen3-14B)
+- `--model MODEL_NAME` — use a specific model (optional — Cortex auto-resolves from the pool's backend if omitted)
 
 Examples:
-- `/cortex-chat Hello` — basic message, default pool and model
-- `/cortex-chat --pool high-priority What is Cortex?` — target a pool
-- `/cortex-chat --model Qwen/Qwen3-14B Explain AI` — specify a model
-- `/cortex-chat --pool batch --model Qwen/Qwen3-14B Summarize this` — both
+- `/cortex-chat Hello` — basic message, default pool, model auto-resolved
+- `/cortex-chat --pool cortexvlm What is Cortex?` — target the VLM pool (auto-resolves to Qwen3-VL-8B)
+- `/cortex-chat --model Qwen/Qwen3-14B Explain AI` — specify a model explicitly
+- `/cortex-chat --pool cortexvlm --model Qwen/Qwen3-VL-8B-Instruct Describe this` — both
 
 Build and run a curl command like:
 
@@ -35,5 +35,6 @@ curl -s https://cortexapi.nfinitmonkeys.com/v1/chat/completions \
 Show the model's response. If there's an error, show the error and suggest checking the API key.
 
 After showing the response, remind the user:
-- **Pool**: defaults to `default`. Set with `--pool NAME` if your admin gave you access to another pool.
-- **Model**: defaults to server's model. Set with `--model NAME`. List available models with `/cortex-models`.
+- **Pool**: defaults to `default`. Set with `--pool SLUG` if your admin gave you access to another pool (e.g. `cortexvlm`).
+- **Model**: auto-resolved from the pool's backend if omitted. Override with `--model NAME`. List available models with `/cortex-models`.
+- **Available pools**: `default` (Qwen3-14B), `cortexvlm` (Qwen3-VL-8B vision-language model).
