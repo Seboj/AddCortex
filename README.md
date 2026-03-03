@@ -78,11 +78,30 @@ Copy-paste patterns for common use cases:
 
 ## Claude Code Skills
 
-Drop `skills/.claude/commands/` into your project for Cortex CLI helpers:
-- `/cortex-test` — verify your connection
-- `/cortex-models` — list available models
-- `/cortex-chat` — interactive chat from the CLI
-- `/cortex-usage` — check your usage and limits
+Add Cortex commands to any project's Claude Code session:
+
+```bash
+# From your project directory:
+~/Projects/AddCortex/install-skills.sh .
+
+# Or specify the path:
+~/Projects/AddCortex/install-skills.sh /path/to/your-project
+```
+
+This copies the skill files into your project's `.claude/commands/` directory.
+Then in Claude Code you get:
+
+| Command | What it does |
+|---------|-------------|
+| `/cortex-test` | Verify your API connection |
+| `/cortex-models` | List available models |
+| `/cortex-chat` | Send a chat message |
+| `/cortex-usage` | Check your usage and rate limits |
+
+Before using, set your API key:
+```bash
+export CORTEX_API_KEY="your-key-here"
+```
 
 ## API Reference
 
