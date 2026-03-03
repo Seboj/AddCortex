@@ -78,17 +78,14 @@ Copy-paste patterns for common use cases:
 
 ## Claude Code Skills
 
-Add Cortex commands to any project's Claude Code session:
+Add Cortex commands to any project's Claude Code session. From your project
+directory:
 
 ```bash
-# From your project directory:
-~/Projects/AddCortex/install-skills.sh .
-
-# Or specify the path:
-~/Projects/AddCortex/install-skills.sh /path/to/your-project
+curl -fsSL https://raw.githubusercontent.com/Seboj/AddCortex/main/install-skills.sh | bash
 ```
 
-This copies the skill files into your project's `.claude/commands/` directory.
+This downloads the skill files into your project's `.claude/commands/` directory.
 Then in Claude Code you get:
 
 | Command | What it does |
@@ -98,7 +95,7 @@ Then in Claude Code you get:
 | `/cortex-chat` | Send a chat message |
 | `/cortex-usage` | Check your usage and rate limits |
 
-Before using, set your API key:
+Before using, set your API key (get one from your Cortex admin):
 ```bash
 export CORTEX_API_KEY="your-key-here"
 ```
