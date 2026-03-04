@@ -24,6 +24,7 @@ SKILLS=(
   "cortex-test.md"
   "cortex-models.md"
   "cortex-chat.md"
+  "cortex-iris.md"
   "cortex-usage.md"
 )
 
@@ -85,6 +86,7 @@ echo "Available commands in Claude Code:"
 echo "  /cortex-test    — verify your API connection"
 echo "  /cortex-models  — list available models"
 echo "  /cortex-chat    — send a chat message (supports --pool and --model)"
+echo "  /cortex-iris    — extract structured data from a document (image/PDF)"
 echo "  /cortex-usage   — check usage and rate limits"
 echo ""
 echo "Before using, set your API key:"

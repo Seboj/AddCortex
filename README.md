@@ -59,6 +59,35 @@ Copy-paste patterns for common use cases:
 | [RAG](docs/recipes/rag.md) | Retrieve + generate |
 | [Batch](docs/recipes/batch.md) | Process N items efficiently |
 
+## Cortex Iris (Document Intelligence)
+
+Extract structured data from images and PDFs — invoices, receipts, business
+cards, or any document.
+
+```python
+import requests, os
+
+resp = requests.post(
+    "https://cortexapi.nfinitmonkeys.com/api/iris/extract",
+    headers={"Authorization": f"Bearer {os.environ['CORTEX_API_KEY']}"},
+    files={"file": open("invoice.pdf", "rb")},
+    data={"extraction_type": "invoice"},
+)
+print(resp.json()["result"])
+# {"vendor": "Acme Corp", "total": 500.0, "date": "2026-01-15", ...}
+```
+
+| Type | What it extracts |
+|------|-----------------|
+| `invoice` | Vendor, line items, totals, tax, dates |
+| `receipt` | Store, items, total, payment method |
+| `business_card` | Name, title, company, email, phone |
+| `general` | Title, summary, key-value fields, raw text |
+| `custom` | Your own JSON schema |
+
+Images go to the VLM (vision-language model) for direct visual extraction.
+Text PDFs are extracted with PyMuPDF and structured by the LLM.
+
 ## Agent Frameworks
 
 | Framework | Guide |
@@ -93,6 +122,7 @@ Then in Claude Code you get:
 | `/cortex-test` | Verify your API connection |
 | `/cortex-models` | List available models |
 | `/cortex-chat` | Send a chat message |
+| `/cortex-iris` | Extract structured data from a document (image/PDF) |
 | `/cortex-usage` | Check your usage and rate limits |
 
 Before using, set your API key (get one from your Cortex admin):
