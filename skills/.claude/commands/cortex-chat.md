@@ -10,9 +10,9 @@ Parse the arguments for optional flags:
 
 Examples:
 - `/cortex-chat Hello` — basic message, default pool, model auto-resolved
-- `/cortex-chat --pool cortexvlm What is Cortex?` — target the VLM pool (auto-resolves to Qwen3-VL-8B)
+- `/cortex-chat --pool cortexvlm What is Cortex?` — target the VLM pool (auto-resolves to Qwen3-VL-32B-AWQ)
 - `/cortex-chat --model Qwen/Qwen3-14B Explain AI` — specify a model explicitly
-- `/cortex-chat --pool cortexvlm --model Qwen/Qwen3-VL-8B-Instruct Describe this` — both
+- `/cortex-chat --pool cortexvlm --model QuantTrio/Qwen3-VL-32B-Instruct-AWQ Describe this` — both
 
 Build and run a curl command like:
 
@@ -37,4 +37,4 @@ Show the model's response. If there's an error, show the error and suggest check
 After showing the response, remind the user:
 - **Pool**: defaults to `default`. Set with `--pool SLUG` if your admin gave you access to another pool (e.g. `cortexvlm`).
 - **Model**: auto-resolved from the pool's backend if omitted. Override with `--model NAME`. List available models with `/cortex-models`.
-- **Available pools**: `default` (Qwen3-14B), `cortexvlm` (Qwen3-VL-8B vision-language model).
+- **Available pools**: `default` (Qwen3-14B), `cortexvlm` (Qwen3-VL-32B-AWQ vision-language model).
