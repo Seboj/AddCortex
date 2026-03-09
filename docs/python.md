@@ -98,6 +98,64 @@ data = json.loads(response.choices[0].message.content)
 print(data)  # {"name": "Alice", "age": 30}
 ```
 
+## Tool / Function Calling
+
+Define tools the model can call. The model returns structured `tool_calls` —
+your app executes the function and sends the result back.
+
+```python
+import json
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "city": {"type": "string", "description": "City name"}
+            },
+            "required": ["city"]
+        }
+    }
+}]
+
+# Step 1: Send message with tools
+response = client.chat.completions.create(
+    messages=[{"role": "user", "content": "What's the weather in London?"}],
+    tools=tools,
+)
+
+# Step 2: Model returns a tool_call (finish_reason == "tool_calls")
+tool_call = response.choices[0].message.tool_calls[0]
+print(tool_call.function.name)       # "get_weather"
+print(tool_call.function.arguments)  # '{"city": "London"}'
+
+# Step 3: Execute the function yourself
+weather_data = {"temp": "12°C", "condition": "Cloudy"}  # your logic here
+
+# Step 4: Send the result back and get the final answer
+final = client.chat.completions.create(
+    messages=[
+        {"role": "user", "content": "What's the weather in London?"},
+        response.choices[0].message,  # assistant message with tool_calls
+        {
+            "role": "tool",
+            "tool_call_id": tool_call.id,
+            "content": json.dumps(weather_data),
+        },
+    ],
+    tools=tools,
+)
+print(final.choices[0].message.content)
+# "The weather in London is 12°C and cloudy."
+```
+
+Use `tool_choice="auto"` (default) to let the model decide, `"none"` to
+prevent tool use, or `{"type": "function", "function": {"name": "get_weather"}}`
+to force a specific function.
+
 ## Error Handling
 
 ```python
@@ -148,6 +206,8 @@ asyncio.run(main())
 | `stream` | `false` | Enable streaming. |
 | `stop` | `None` | Stop sequences. |
 | `response_format` | — | `{"type": "json_object"}` for JSON mode. |
+| `tools` | `None` | List of tool/function definitions. |
+| `tool_choice` | `"auto"` | `"auto"`, `"none"`, or specific function. |
 
 ## What's Different from OpenAI
 

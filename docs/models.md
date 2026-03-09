@@ -39,14 +39,15 @@ response = client.chat.completions.create(
 
 ## Model Capabilities
 
-| Capability | Qwen3-14B |
-|-----------|-----------|
-| Chat completions | Yes |
-| Streaming | Yes |
-| JSON mode | Yes |
-| Function calling | Basic |
-| Context window | 32K tokens |
-| Languages | English, Chinese, multilingual |
+| Capability | Qwen3-14B | Qwen3-VL-32B (VLM pool) |
+|-----------|-----------|--------------------------|
+| Chat completions | Yes | Yes |
+| Streaming | Yes | Yes |
+| JSON mode | Yes | Yes |
+| Tool/function calling | Yes | Yes |
+| Vision (image input) | No | Yes |
+| Context window | 32K tokens | 32K tokens |
+| Languages | English, Chinese, multilingual | English, Chinese, multilingual |
 
 ## Model in Different Pools
 

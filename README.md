@@ -46,6 +46,42 @@ That's it. Any OpenAI SDK (Python, Node, Go, Rust, etc.) works out of the box.
 | [Streaming](docs/streaming.md) | Server-sent events, chunk handling |
 | [Auth & Keys](docs/auth.md) | API key format, rate limits, usage tracking |
 
+## Tool / Function Calling
+
+Let the model call functions in your application. Send a `tools` array and the
+model returns structured `tool_calls` instead of plain text.
+
+```python
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "city": {"type": "string"}
+            },
+            "required": ["city"]
+        }
+    }
+}]
+
+# Model decides to call the function
+response = client.chat.completions.create(
+    messages=[{"role": "user", "content": "What's the weather in London?"}],
+    tools=tools,
+)
+
+tool_call = response.choices[0].message.tool_calls[0]
+# tool_call.function.name == "get_weather"
+# tool_call.function.arguments == '{"city": "London"}'
+```
+
+Your app executes the function, then sends the result back as a `tool` message.
+See [Python](docs/python.md#tool--function-calling) or
+[Node.js](docs/node.md#tool--function-calling) for the full loop.
+
 ## Recipes
 
 Copy-paste patterns for common use cases:
